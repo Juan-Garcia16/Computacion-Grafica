@@ -57,7 +57,7 @@ def ejercicio3():
     letras = frase.replace(" ", "")
     num_letras = len(letras)
     
-    palabra_larga = max(palabras, key=len) # busca el mayor elemento en una lista, en este caso asigno un key para comparar con respecto a la longitud 
+    palabra_larga = max(palabras, key=len) #Busca el mayor elemento en una lista, en este caso asigno un key para comparar con respecto a la longitud 
     
     print("El número total de palabras:", num_palabras)
     print("El número total de letras:", num_letras)
@@ -82,9 +82,29 @@ Pide una frase al usuario y cuenta cuántas vocales contiene. Muestra también e
 cada vocal por separado.
 '''
 def ejercicio5():
-    print("Xd")
+    frase = input("Ingrese una frase: ")
+    vocales = ["a", "e", "i", "o", "u"]
+    conteo_vocales = {"a": 0, "e": 0, "i": 0, "o": 0, "u": 0}
+
+    for letra in frase:
+        for vocal in vocales:
+            if letra == vocal:
+                if vocal == "a":
+                    conteo_vocales["a"] += 1
+                elif vocal == "e":
+                    conteo_vocales["e"] += 1
+                elif vocal == "i":
+                    conteo_vocales["i"] += 1
+                elif vocal == "o":
+                    conteo_vocales["o"] += 1
+                elif vocal == "u":
+                    conteo_vocales["u"] += 1
     
-    
+    print("a =", conteo_vocales["a"])
+    print("e =", conteo_vocales["e"])
+    print("i =", conteo_vocales["i"])
+    print("o =", conteo_vocales["o"])
+    print("u =", conteo_vocales["u"])
     
 
 def main():
@@ -98,7 +118,7 @@ def main():
     elif option == 4:
         ejercicio4()
     elif option == 5:
-        ejercicio4()
+        ejercicio5()
         
 if __name__ == "__main__":
     main()
