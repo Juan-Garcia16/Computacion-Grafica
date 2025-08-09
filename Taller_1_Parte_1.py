@@ -21,7 +21,6 @@ Pide al usuario su edad y muestra un mensaje indicando si es:
 - Adolescente (13 < edad < 18)
 - Adulto (edad >= 18).
 '''
-
 def ejercicio2():
     edad = int(input("Ingrese su edad: "))
     if (edad <= 13 and edad > 0):
@@ -31,24 +30,24 @@ def ejercicio2():
     else:
         print("Usted es un adulto")
 
+
 '''
 Ejercicio 3: Bucles
 Muestra los números del 1 al 20, omitiendo los múltiplos de 3.
 '''
-
 def ejercicio3():
     for i in range(1, 21):
         if i % 3 == 0:
             continue
         else:
             print(i)
+          
             
 '''
 Ejercicio 4: Función saludo
 Crea una función que reciba un nombre y una edad, y devuelva un saludo diciendo cuántos
 años tendrá en 5 años.
 '''
-
 def ejercicio4():
     name = str(input("Ingrese su nombr: "))
     age = int(input("Ingrese su edad: "))
