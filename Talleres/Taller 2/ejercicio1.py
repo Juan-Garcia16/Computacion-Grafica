@@ -6,8 +6,7 @@ Crea un array 1D con los valores [12, 45, 78, 34, 56] y:
 2. Muestra su tipo de datos (dtype).
 3. Muestra el número de dimensiones (ndim) y su forma (shape).
 '''
-arr = [12, 45, 78, 34, 56]
-arr_1d = np.array(arr)
+arr_1d = np.array([12, 45, 78, 34, 56])
 print("Array:", arr_1d)
 print("Tipo de datos:", arr_1d.dtype)
 print("Dimension:", arr_1d.ndim)
