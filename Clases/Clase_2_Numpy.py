@@ -16,7 +16,7 @@ print("\nLista 2d (diferente a un array 2d):\n", lista_2d)
 
 arr_2d = np.array(lista_2d)
 arr_columna1 = arr_2d[:,1] #todas las filas de la columna 1
-arr_fila2 = arr_2d[2,:] #Tolas las columnas de la fila 2
+arr_fila2 = arr_2d[2,:] #Todas las columnas de la fila 2
 #[filas, columnas]
 
 print("\nArray 2d (matriz): \n", arr_2d)
