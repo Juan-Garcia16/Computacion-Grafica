@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image #Para sumar imagenes de distintos tamanos
 
+#plt ya lee como array, no es necesrio np primero
 img = plt.imread('imagenes/charmander.jpg')/255 #/255 para normalizar
-
+    
 imgN = 1 - img
 
 plt.subplot(3, 3, 1)
@@ -85,4 +86,5 @@ plt.title("Imagen gris tonalidad")
 plt.axis('off')
 
 plt.show()
+
 
