@@ -13,8 +13,19 @@ def fusion_imagenes_ecualizadas(img1, img2):
 imagen1 = plt.imread("images_taller/github.webp")/255
 imagen2 = plt.imread("images_taller/fondo.jpg")/255
 
+plt.subplot(1, 3, 1)
+plt.axis("off")
+plt.title("Imagen 1")
+plt.imshow(imagen1)
+
+plt.subplot(1, 3, 2)
+plt.axis("off")
+plt.title("Imagen 2")
+plt.imshow(imagen2)
+
 imagen_ecualizada = fusion_imagenes_ecualizadas(imagen1, imagen2)
+plt.subplot(1, 3, 3)
 plt.title("Imagen ecualizada")
 plt.axis('off')
 plt.imshow(imagen_ecualizada)
-plt.show()sdad
+plt.show()
