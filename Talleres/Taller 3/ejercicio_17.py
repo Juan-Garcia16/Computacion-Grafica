@@ -5,7 +5,7 @@ Elaborar una función a la que se le envié una imagen y que
 retorne la imagen en escala de grises con la técnica de La tonalidad
 (Midgray)
 '''
-def midgray_grays(imagen):
+def midgray_grays(img):
     midgray = (np.maximum(img[:,:,0], img[:,:,1], img[:,:,2]) +
                np.minimum(img[:,:,0], img[:,:,1], img[:,:,2]))/2
     return midgray
