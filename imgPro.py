@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def layer(img, capa):
     img_capa = np.zeros_like(img)
@@ -81,3 +82,71 @@ def crop(img, xini, xfin, yini, yfin):
 def lower_resolution(img, zoom_factor):
     img_copia = np.copy(img)
     return img_copia[::zoom_factor, ::zoom_factor]
+
+def trasnslation(img, dx, dy):
+    """
+    Traslada una imagen dx píxeles en x y dy píxeles en y.
+    Los píxeles que salen del borde se rellenan con negro.
+    """
+    trasladada = np.zeros_like(img)
+
+    # Calcular límites válidos para el copiado
+    h, w = img.shape[:2]
+    x_origen_inicio = 0
+    x_origen_fin = w - dx
+    y_origen_inicio = 0
+    y_origen_fin = h - dy
+
+    # Asignar los valores trasladados
+    trasladada[dy:h, dx:w] = img[y_origen_inicio:y_origen_fin, x_origen_inicio:x_origen_fin]
+
+    return trasladada
+
+def rotarImg(a, ang):
+    """
+    Rota una imagen en sentido antihorario por un ángulo dado.
+    Parámetros:
+    a (numpy.ndarray): Imagen de entrada representada como un arreglo 2D.
+    ang (float): Ángulo de rotación en grados. Debe estar en el rango (0, π] radianes.
+    Devuelve:
+    numpy.ndarray: Imagen rotada con el mismo tipo de datos que la imagen de entrada.
+    Excepciones:
+    ValueError: Si el ángulo está fuera del rango esperado (0 < ang <= π).
+    Notas:
+    - La función convierte el ángulo de grados a radianes internamente.
+    - La imagen de salida tendrá dimensiones ajustadas para contener la imagen rotada.
+    - La rotación se realiza en sentido antihorario.
+    """
+    ang = np.radians(ang)  # Convertir a radianes
+    m, n = a.shape
+    cos_ang = np.cos(ang)
+    sin_ang = np.sin(ang)
+
+    if ang > 0 and ang <= np.pi / 2:
+        c = int(round(m * sin_ang + n * cos_ang)) + 1
+        d = int(round(m * cos_ang + n * sin_ang)) + 1
+        b = np.zeros((c, d), dtype=a.dtype)
+        for i in range(c):
+            for j in range(d):
+                iii = i - int(n * sin_ang) - 1
+                ii = int(round(j * sin_ang + iii * cos_ang))
+                jj = int(round(j * cos_ang - iii * sin_ang))
+                if 0 <= ii < m and 0 <= jj < n:
+                    b[i, j] = a[ii, jj]
+    elif ang > np.pi / 2 and ang <= np.pi:
+        c = int(round(m * sin_ang - n * cos_ang)) + 1
+        d = int(round(m * sin_ang - n * cos_ang)) + 1
+        e = -n * cos_ang
+        b = np.zeros((c, d), dtype=a.dtype)
+        for i in range(c):
+            iii = c - i - 1
+            for j in range(d):
+                jjj = d - j - 1
+                ii = int(round(jjj * sin_ang + iii * cos_ang))
+                jj = int(round(jjj * cos_ang - iii * sin_ang))
+                if 0 <= ii < m and 0 <= jj < n:
+                    b[i, j] = a[ii, jj]
+    else:
+        raise ValueError("Ángulo fuera del rango esperado (0 < ang <= π)")
+
+    return b
