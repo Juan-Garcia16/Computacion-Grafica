@@ -5,8 +5,9 @@ Elaborar una función a la que se le envié de una imagen y
 retorne la imagen en Amarillo
 '''
 def amarillo(imagen):
-    imagen[:,:,2] = 0 # Cancelar capa azul
-    return imagen
+    imagen_copia = imagen.copy()
+    imagen_copia[:,:,2] = 0 # Cancelar capa azul
+    return imagen_copia
 
 img = plt.imread("images_taller/logo_utp.jpg")/255
 plt.subplot(1,2,1)

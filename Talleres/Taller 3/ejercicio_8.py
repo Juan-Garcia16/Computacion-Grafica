@@ -5,8 +5,9 @@ Elaborar una función a la que se le envié de una imagen y
 retorne la imagen en Cyan
 '''
 def cyan(imagen):
-    imagen[:,:,0] = 0 # Cancelar capa roja
-    return imagen
+    imagen_copia = imagen.copy()
+    imagen_copia[:,:,0] = 0 # Cancelar capa roja
+    return imagen_copia
 
 img = plt.imread("images_taller/logo_utp.jpg")/255
 plt.subplot(1,2,1)

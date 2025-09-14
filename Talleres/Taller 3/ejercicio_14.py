@@ -1,17 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 '''
-Elaborar una función a la que se le envie una imagen y que
-retorne la imagen con la Técnica de promedio (Average)
+Elaborar una función a la que se le envié una imagen y que
+retorne la imagen en escala de grises con la técnica de Luminosidad
+(Luminosity)
 '''
-def promedio_imagen(imagen):
-    return (imagen[:,:,0] + imagen[:,:,1] + imagen[:,:,2]) / 3
 
+def luminosity_grays(imagen):
+    return 0.299*imagen[:,:,0] + 0.587*imagen[:,:,1] + 0.114*imagen[:,:,2]
 
 img = plt.imread("images_taller/logo_utp.jpg")/255
-imagen_promedio = promedio_imagen(img)
+imagen_luminosidad = luminosity_grays(img)
 
 plt.axis("off")
-plt.title("Imagen con Técnica de promedio")
-plt.imshow(imagen_promedio)
+plt.title("Escala de grises (Luminosity)")
+plt.imshow(imagen_luminosidad, cmap='gray')
 plt.show()
+

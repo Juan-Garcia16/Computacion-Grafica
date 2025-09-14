@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 Elaborar una función a la que se le envié de una imagen y retorne la imagen en Magenta
 '''
 def magenta(imagen):
-    imagen[:,:,1] = 0 # Cancelar capa verde
-    return imagen
+    image_copia = imagen.copy()
+    image_copia[:,:,1] = 0 # Cancelar capa verde
+    return image_copia
 
 img = plt.imread("images_taller/logo_utp.jpg")/255
 plt.subplot(1,2,1)

@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 Elaborar una función a la que se le envie de una imagen retorne su capa verde
 '''
 def capa_verde(imagen):
-    imagen[:,:,0] = 0 #Cancelar capa roja
-    imagen[:,:,2] = 0 #Cancelar capa azul
-    return imagen
-    
+    capa = imagen.copy()
+    capa[:,:,0] = 0 #Cancelar capa roja
+    capa[:,:,2] = 0 #Cancelar capa azul
+    return capa
+
 img = plt.imread("images_taller/logo_utp.jpg")/255
 plt.subplot(1,2,1)
 plt.axis("off")

@@ -4,9 +4,10 @@ import matplotlib.pyplot as plt
 Elaborar una función a la que se le envie de una imagen retorne su capa azul
 '''
 def capa_azul(imagen):
-    imagen[:,:,0] = 0 # Cancelar capa roja
-    imagen[:,:,1] = 0 # Cancelar capa verde
-    return imagen
+    capa = imagen.copy()
+    capa[:,:,0] = 0 # Cancelar capa roja
+    capa[:,:,1] = 0 # Cancelar capa verde
+    return capa
 
 img = plt.imread("images_taller/logo_utp.jpg")/255
 plt.subplot(1,2,1)

@@ -5,8 +5,8 @@ Elaborar una función a la que se le envié 2 imágenes y que me
 retorne la fusión de las dos imágenes ecualizadas
 '''
 def fusion_imagenes_ecualizadas(img1, img2):
-    factor = 0.4
-    imagen_fusionada = ((img1 + img2) * factor)/ 2
+    factor = 0.7
+    imagen_fusionada = img1*factor + img2*(1-factor)
     return imagen_fusionada
 
 
