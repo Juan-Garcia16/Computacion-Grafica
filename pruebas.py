@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pylab as plt
-import imgPro as im
+import Clases.imgPro as im
 
 img = plt.imread("imagenes/charmander.jpg")/255
 

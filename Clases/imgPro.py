@@ -53,8 +53,10 @@ def midgray_grays(img):
     return midgray
 
 def bright(img, brillo):
-    img_copia = np.copy(img)
-    return img_copia + brillo
+    img_cop = np.copy(img)
+    img_cop = img_cop + brillo * 255
+    img_cop = np.clip(img_cop, 0, 255)
+    return img_cop
 
 def bright_layer(img, brillo, capa):
     img_capa = np.copy(img)
