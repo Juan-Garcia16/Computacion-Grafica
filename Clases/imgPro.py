@@ -64,8 +64,10 @@ def bright_layer(img, brillo, capa):
     return img_capa
 
 def contraste_dark(img, contraste):
-    img_copia = np.copy(img)
-    return contraste * np.log10(1 + img_copia)
+    img_cop = np.copy(img)
+    img_cop = (contraste * 255) * np.log10(1 + img_cop)
+    # img_cop = np.clip(img_cop, 0, 255)
+    return img_cop
 
 def contraste_light(img, contraste):
     img_copia = np.copy(img)
