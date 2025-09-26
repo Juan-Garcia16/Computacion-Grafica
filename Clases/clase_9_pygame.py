@@ -44,6 +44,23 @@ while running:  # Bucle principal del programa
 
     # Crea un pentágono
     pygame.draw.polygon(screen, "orange", [(400, 250), (450, 200), (500, 250), (475, 300), (425, 300)], width=5)
+    
+    # Dibuja una elipse cian
+    # screen: superficie donde se dibuja
+    # "cyan": color de la elipse
+    # (100, 400, 200, 100): (x, y, ancho, alto) del rectángulo que contiene la elipse
+    # width=5:grosor del borde
+    pygame.draw.ellipse(screen, "cyan", (100, 400, 200, 100), width=5)  
 
+    # Dibuja un arco magenta
+    # screen: superficie donde se dibuja
+    # "magenta": color del arco
+    # (300, 400, 200, 100): (x, y, ancho, alto) del rectángulo que contiene el arco
+    # 0: ángulo de inicio
+    # 3.14: ángulo de fin
+    # width=5: grosor del borde
+    pygame.draw.arc(screen, "magenta", (300, 400, 200, 100), 0, 3.14, width=5)
+    
+    
     pygame.display.flip()  # Actualiza la pantalla con los nuevos dibujos
     dt = clock.tick(60)  # Limita el bucle a 60 FPS y devuelve el tiempo desde el último tick
