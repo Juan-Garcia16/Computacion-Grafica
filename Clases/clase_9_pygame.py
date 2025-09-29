@@ -56,8 +56,8 @@ while running:  # Bucle principal del programa
     # screen: superficie donde se dibuja
     # "magenta": color del arco
     # (300, 400, 200, 100): (x, y, ancho, alto) del rectángulo que contiene el arco
-    # 0: ángulo de inicio
-    # 3.14: ángulo de fin
+    # 0: ángulo de inicio (radianes)
+    # 3.14: ángulo de fin (radianes)
     # width=5: grosor del borde
     pygame.draw.arc(screen, "magenta", (300, 400, 200, 100), 0, 3.14, width=5)
     
