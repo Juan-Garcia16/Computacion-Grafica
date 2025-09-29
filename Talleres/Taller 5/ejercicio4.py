@@ -13,6 +13,7 @@ clock = pygame.time.Clock()
 running = True
 drawing = False
 last_pos = None
+grosor = 5
 screen.fill("white")
 
 while running:
@@ -23,15 +24,24 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             drawing = True
             last_pos = event.pos
+            
         if event.type == pygame.MOUSEBUTTONUP:
             drawing = False
             
         if event.type == pygame.MOUSEMOTION and drawing:
-            pygame.draw.line(screen, "black", last_pos, event.pos, 5)
-            last_pos = event.pos #actualiza la posición
+            pygame.draw.line(screen, "black", last_pos, event.pos, grosor)
+            last_pos = event.pos #actualiza la posicion
+            
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_c:
+                screen.fill("white")
+            elif event.key in [pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS]:
+                grosor += 1
+            elif event.key in [pygame.K_MINUS, pygame.K_KP_MINUS]:
+                grosor -= 1
             
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(90)
     
 pygame.quit()
             

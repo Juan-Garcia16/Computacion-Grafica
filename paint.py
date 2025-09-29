@@ -30,6 +30,14 @@ while running:
         if event.type == pygame.MOUSEMOTION and drawing:
             pygame.draw.line(screen, color, last_pos, event.pos, grosor)
             last_pos = event.pos
+            
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_c:
+                screen.fill("white")
+            elif event.key in [pygame.K_PLUS, pygame.K_EQUALS, pygame.K_KP_PLUS]: #para asegurar que funcione en todos los teclados
+                grosor += 3
+            elif event.key in [pygame.K_MINUS, pygame.K_KP_MINUS]:
+                grosor -= 10
 
     pygame.display.flip()
     clock.tick(60)
