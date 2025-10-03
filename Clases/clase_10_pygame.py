@@ -52,7 +52,7 @@ while running:
 
         '''Dibujar un ciriculo en la posicion del mouse'''
         if event.type == pygame.MOUSEMOTION:
-            if event.button == 1:
+            if event.buttons == 1:
                 pygame.draw.circle(screen, COLOR, event.pos, 10)  #Dibujar un circulo en la posicion del mouse
 
         screen.fill((200,200,200))     #Pintar la ventana de gris
