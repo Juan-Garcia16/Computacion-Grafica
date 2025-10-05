@@ -1,87 +1,194 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
 
 def layer(img, capa):
+    """
+    Extrae una capa específica (0=Rojo, 1=Verde, 2=Azul) de una imagen RGB.
+    """
     img_capa = np.zeros_like(img)
     img_capa[:,:,capa] = img[:,:, capa]
     return img_capa
 
 def cyan(img):
+    """
+    Extrae la capa cian de una imagen RGB.
+    """
     image_cyan = img.copy()
     image_cyan[:,:,0] = 0 # Cancelar capa roja
     return image_cyan
 
 def magenta(img):
+    """
+    Extrae la capa magenta de una imagen RGB.
+    """
     image_magenta = img.copy()
     image_magenta[:,:,1] = 0 # Cancelar capa verde
     return image_magenta
 
 def yellow(img):
+    """
+    Extrae la capa amarilla de una imagen RGB.
+    """
     image_yellow = img.copy()
     image_yellow[:,:,2] = 0 # Cancelar capa azul
     return image_yellow
 
 def reverse(img):
+    """
+    Invierte los colores de una imagen.
+    """
     image_reverse = 1 - img
     return image_reverse
 
 def remove_layer(img, capa):
+    """
+    Elimina una capa específica (0=Rojo, 1=Verde, 2=Azul) de una imagen RGB.
+    """
     img_copia = np.copy(img)
     img_copia[:,:,capa] = 0
     return img_copia
 
-def fusion_images(img1, img2):
-    img_fusionada = (img1 + img2) / 2
-    return img_fusionada
+def image_resize(img1, img2, resize_method, w1, h1, w2, h2):
+    """
+    Determina el tamaño objetivo para redimensionar dos imágenes según el método especificado.
+    """
+    if resize_method == 'resize_to_smaller':
+        target_size = (min(w1, w2), min(h1, h2))
+    elif resize_method == 'resize_to_larger':
+        target_size = (max(w1, w2), max(h1, h2))
+    else:  # resize_second_to_first
+        target_size = (w1, h1)
+    return target_size
+    
+
+def fusion_images(img1, img2, resize_method='resize_to_smaller'):
+    """
+    Fusiona dos imágenes promediando sus píxeles.
+    
+    Parámetros:
+    - img1, img2: Las imágenes a fusionar
+    - resize_method: 'resize_to_smaller', 'resize_to_larger', 'resize_second_to_first'
+    - resize_method por defecto es 'resize_to_smaller'
+    """
+    # Convertir a PIL si es necesario
+    if isinstance(img1, np.ndarray):
+        img1_pil = Image.fromarray((img1 * 255).astype(np.uint8))
+    else:
+        img1_pil = img1
+    
+    if isinstance(img2, np.ndarray):
+        img2_pil = Image.fromarray((img2 * 255).astype(np.uint8))
+    else:
+        img2_pil = img2
+    
+    # Obtener dimensiones
+    w1, h1 = img1_pil.size
+    w2, h2 = img2_pil.size
+    
+    # Redimensionar solo si es necesario
+    if (w1, h1) != (w2, h2):
+        target_size = image_resize(img1, img2, resize_method, w1, h1, w2, h2)
+        img1_pil = img1_pil.resize(target_size)
+        img2_pil = img2_pil.resize(target_size)
+    
+    # Convertir de vuelta a numpy y fusionar
+    img1_np = np.array(img1_pil) / 255.0
+    img2_np = np.array(img2_pil) / 255.0
+    
+    return (img1_np + img2_np) / 2
 
 def fusion_images_ecualized(img1, img2, factor):
+    """
+    Fusiona dos imágenes con un factor específico de ecualización, solo fusiona
+    imágenes del mismo tamaño.
+    """
+    if img1.shape != img2.shape:
+        raise ValueError("Las imágenes deben tener el mismo tamaño para fusionarlas.")
     img_fusionada = factor * img1 + (1 - factor) * img2
     return img_fusionada
 
 def average(img):
+    """
+    Convierte una imagen a escala de grises usando el método del promedio."""
     img_copia = np.copy(img)
     return (img_copia[:,:,0] + img_copia[:,:,1] + img_copia[:,:,2]) / 3
 
 def luminosity(img):
+    """
+    Convierte una imagen a escala de grises usando el método de luminosidad.
+    """
     img_copia = np.copy(img)
     return 0.299*img_copia[:,:,0] + 0.587*img_copia[:,:,1] + 0.114*img_copia[:,:,2]
 
-def midgray_grays(img):
+def midgray(img):
+    """
+    Convierte una imagen a escala de grises usando el método de gris medio.
+    """
     img_copia = np.copy(img)
     midgray = (np.maximum(img_copia[:,:,0], img_copia[:,:,1], img_copia[:,:,2]) +
                np.minimum(img_copia[:,:,0], img_copia[:,:,1], img_copia[:,:,2]))/2
     return midgray
 
 def bright(img, brillo):
+    """
+    Altera el brillo de una imagen normalizada [-1 , 1].
+    """
     img_cop = np.copy(img)
-    img_cop = img_cop + brillo * 255
-    img_cop = np.clip(img_cop, 0, 255)
+    img_cop = img_cop + brillo
+    img_cop = np.clip(img_cop, 0, 1)
     return img_cop
 
 def bright_layer(img, brillo, capa):
+    """
+    Altera el brillo de una capa específica RGB de una imagen normalizada [-1 , 1].
+    """
     img_capa = np.copy(img)
     img_capa[:,:,capa] = img[:,:,capa] + brillo
     return img_capa
 
-def contraste_dark(img, contraste):
+def contrast_dark(img, contraste):
+    """
+    Aplica contraste oscuro usando transformación logarítmica.
+    """
     img_cop = np.copy(img)
-    img_cop = (contraste * 255) * np.log10(1 + img_cop)
-    # img_cop = np.clip(img_cop, 0, 255)
+    img_cop = contraste * np.log10(1 + img_cop)
+    img_cop = np.clip(img_cop, 0, 1)
     return img_cop
 
-def contraste_light(img, contraste):
+def contrast_light(img, contraste):
+    """
+    Aplica contraste claro usando transformación exponencial.
+    """
     img_copia = np.copy(img)
+    img_copia = contraste * np.exp(img_copia - 1)
+    img_copia = np.clip(img_copia, 0, 1) 
     return contraste * np.exp(img_copia - 1)
 
 def binarize(img, umbral):
+    """
+    Binariza una imagen normalizada usando un umbral específico.
+    """
     img_copia = np.copy(img)
     img_gris = (img_copia[:,:,0] + img_copia[:,:,1] + img_copia[:,:,2]) / 3
     img_binaria = (img_gris > umbral)
     return img_binaria
 
-def crop(img, xini, xfin, yini, yfin):
+def crop(img, xIni, yIni, xFin, yFin):
+    """
+    Deja una sección rectangular de la imagen definida por las coordenadas
+    (xIni, yIni) y (xFin, yFin), siendo esquina superior izquierda y esquina inferior derecha respectivamente.
+    """
+    temp = yIni
+    yIni = xIni
+    xIni = temp
+    
+    temp = yFin
+    yFin = xFin
+    xFin = temp
+    
     img_copia = np.copy(img)
-    return img_copia[xini:xfin, yini:yfin]
+    return img_copia[xIni:xFin, yIni:yFin]
 
 def lower_resolution(img, zoom_factor):
     img_copia = np.copy(img)
