@@ -61,7 +61,6 @@ def image_resize(img1, img2, resize_method, w1, h1, w2, h2):
         target_size = (w1, h1)
     return target_size
     
-
 def fusion_images(img1, img2, resize_method='resize_to_smaller'):
     """
     Fusiona dos imágenes promediando sus píxeles.
@@ -190,10 +189,6 @@ def crop(img, xIni, yIni, xFin, yFin):
     img_copia = np.copy(img)
     return img_copia[xIni:xFin, yIni:yFin]
 
-def lower_resolution(img, zoom_factor):
-    img_copia = np.copy(img)
-    return img_copia[::zoom_factor, ::zoom_factor]
-
 def trasnslation(img, dx, dy):
     """
     Traslada una imagen dx píxeles en x y dy píxeles en y.
@@ -212,6 +207,45 @@ def trasnslation(img, dx, dy):
     trasladada[dy:h, dx:w] = img[y_origen_inicio:y_origen_fin, x_origen_inicio:x_origen_fin]
 
     return trasladada
+
+def lower_resolution(img, zoom_factor):
+    img_copia = np.copy(img)
+    return img_copia[::zoom_factor, ::zoom_factor]
+
+# def zoom(img, zoom_factor):
+#     """
+#     Aplica un zoom a una imagen normalizada.
+#     """
+#     img_copia = np.copy(img)
+#     return np.kron(img_copia, np.ones((zoom_factor, zoom_factor, 1)))
+
+def mhist (RGB, tipo='n', color='gray'):
+    """
+    Grafica el histograma de una imagen.
+    Parámetros:
+    - RGB: imagen en escala de grises o un canal (2D array)
+    - tipo: 'p' para porcentaje, 'n' para conteo absoluto
+    - color: color del histograma (ej. 'red', 'green', 'blue', 'gray')
+    """
+    formato = tipo.lower()
+    filas, columnas = RGB.shape[:2]
+    
+    if formato == 'p':
+        factor = (filas * columnas) / 100 # para mostrar en porcentaje
+    else:
+        factor = 1 # para mostrar en conteo
+    histograma = np.zeros(256)
+
+    for nivel in range(256):
+        histograma[nivel] = np.sum(RGB == nivel) / factor
+        
+    plt.bar(np.arange(256), histograma, color=color, width=1) 
+    plt.title("Histograma")
+    plt.xlabel("Nivel de Intensidad (0-255)")
+    plt.ylabel("Porcentaje" if formato == 'p' else "Frecuencia")
+    plt.xlim([0, 255])
+    plt.tight_layout() 
+    plt.show()
 
 def rotarImg(a, ang):
     """
